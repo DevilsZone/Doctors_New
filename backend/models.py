@@ -1,5 +1,4 @@
 from django.db import models
-from process_zipcode import download_data
 # Create your models here.
 
 class ZipCode(models.Model):
@@ -7,20 +6,6 @@ class ZipCode(models.Model):
 
     def __str__(self):
         return self.zip_code
-
-    def save(self, *args, **kwargs):
-        if self.id:
-            super(ZipCode, self).save(*args, **kwargs)
-        else:
-            super(ZipCode, self).save(*args, **kwargs)
-            doctors_data = download_data(self.zip_code)
-            if doctors_data:
-                for data in doctors_data:
-                    DoctorData(practice_name=data['PracticeName'], first_name=data['FirstName'],
-                               last_name=data['LastName'], address=data['Address'], city=data['City'],
-                               state=data['State'], zip=data['Zip'], phone=data['Phone'], speciality=data['Specialty']
-                               , lat=data['Latitude'], long=data['Longitude'], distance=data['Distance'],
-                               doctors=data['Specialists'], relation_manager=self).save()
 
 
 class DoctorData(models.Model):
@@ -37,8 +22,28 @@ class DoctorData(models.Model):
     long = models.CharField(max_length=20, null=True, blank=True)
     distance = models.CharField(max_length=20, null=True, blank=True)
     doctors = models.TextField(null=True, blank=True)
-    relation_manager = models.ForeignKey(ZipCode, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.practice_name + " | " + self.city
+        return self.practice_name
+
+
+class OldData(models.Model):
+    id = models.CharField(max_length=100, primary_key=True)
+    id_1 = models.CharField(max_length=100)
+    company_name = models.TextField(null=True, blank=True)
+    duplicate = models.CharField(max_length=10, null=True, blank=True)
+    shipping_address_1 = models.TextField(null=True, blank=True)
+    shipping_address_2 = models.TextField(null=True, blank=True)
+    shipping_city = models.TextField(null=True, blank=True)
+    shipping_state = models.TextField(null=True, blank=True)
+    shipping_zip = models.TextField(null=True, blank=True)
+    shipping_country = models.TextField(null=True, blank=True)
+    medical_license_number = models.TextField(null=True, blank=True)
+    date_created = models.TextField(null=True, blank=True)
+    sales_rep = models.TextField(null=True, blank=True)
+    inactive = models.CharField(max_length=10, null=True, blank=True)
+    secondary_sales_rep = models.TextField(null=True, blank=True)
+
+    def __str__(self):
+        return self.id_1 + " | " + self.company_name
 

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import ZipCode, DoctorData
+from .models import ZipCode, DoctorData, OldData
 from import_export import resources
 from import_export.admin import ImportExportModelAdmin
 
@@ -16,6 +16,18 @@ class Zip_CodeAdmin(ImportExportModelAdmin):
 admin.site.register(ZipCode, Zip_CodeAdmin)
 
 
+class OldResource(resources.ModelResource):
+    class Meta:
+        model = OldData
+
+
+class OldAdmin(ImportExportModelAdmin):
+    resource_class = OldResource
+
+
+admin.site.register(OldData, OldAdmin)
+
+
 class DoctorResource(resources.ModelResource):
     class Meta:
         model = DoctorData
@@ -27,3 +39,4 @@ class DoctorAdmin(ImportExportModelAdmin):
 
 
 admin.site.register(DoctorData, DoctorAdmin)
+

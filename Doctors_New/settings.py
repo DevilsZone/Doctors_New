@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'enable.apps.EnableConfig',
     'backend.apps.BackendConfig',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -39,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'import_export',
+    'background_task',
 ]
 
 MIDDLEWARE = [
@@ -121,3 +123,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+BACKGROUND_TASK_RUN_ASYNC = True
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'akashkumarqoou1997@gmail.com'
+EMAIL_HOST_PASSWORD = 'AkasHKumar@1997'
+EMAIL_USE_TLS = False
+EMAIL_USE_SSL = True
